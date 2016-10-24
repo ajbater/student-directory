@@ -23,9 +23,11 @@ def print_header
 end
 
 def print(students)
-  puts "Below are students whose names are shorter than 5 characters:"
+  puts"Enter a letter to print students whose name begins with that letter (hit ENTER when ready): "
+  letter = gets.chomp.upcase
+  puts "Below are students whose names begin with #{letter}:"
   students.each.with_index(1) do |student, index|
-    if student[:name].length < 12
+    if student[:name].start_with?(letter)
       puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
     end
   end
