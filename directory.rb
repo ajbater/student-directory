@@ -7,7 +7,7 @@ def input_students
   name = gets.chomp
   # while name is not empty, repeat this code
     while !name.empty? do
-      # add the student has to the array
+      # add the student hash to the array
       students << {name: name, cohort: :november}
       puts "Now we have #{students.count} students"
       # get another name from the user
@@ -23,8 +23,11 @@ def print_header
 end
 
 def print(students)
+  puts "Below are students whose names are shorter than 5 characters:"
   students.each.with_index(1) do |student, index|
-    puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
+    if student[:name].length < 12
+      puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
+    end
   end
 end
 
