@@ -1,3 +1,5 @@
+@line_width = 80
+
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
@@ -18,23 +20,21 @@ def input_students
 end
 
 def print_header
-  puts "The students of Villain Academy"
-  puts "---------------"
+  puts "The students of Villain Academy".center(@line_width)
+  puts "---------------".center(@line_width)
 end
 
 def print(students)
-  puts"Enter a letter to print students whose name begins with that letter (hit ENTER when ready): "
-  letter = gets.chomp.upcase
-  puts "Below are students whose names begin with #{letter}:"
-  students.each.with_index(1) do |student, index|
-    if student[:name].start_with?(letter)
-      puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
+   puts "Below are students whose names are shorter than 12 characters:".center(@line_width)
+    students.each.with_index(1) do |student, index|
+     if student[:name].length < 12
+       puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)".center(@line_width)
+     end
     end
   end
-end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+  puts "Overall, we have #{students.count} great students".center(@line_width)
 end
 
 students = input_students
