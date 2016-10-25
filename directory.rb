@@ -1,23 +1,36 @@
 @line_width = 80
 
 def input_students
-  puts "Please enter the names of the students"
+  puts "Please enter the names of the student followed by their cohort"
+  puts "Keep adding students and cohorts until you have entered them all"
   puts "To finish, just hit return twice"
   # create an empty array
   students = []
   # get the first names
+  puts "Name: "
   name = gets.chomp
+  puts "Cohort: "
+  cohort = gets.chomp.to_sym
+  if cohort.empty?
+    cohort = :november
+  end
   # while name is not empty, repeat this code
     while !name.empty? do
       # add the student hash to the array
-      students << {name: name, cohort: :november}
+      students << {name: name, cohort: cohort}
         if students.count == 1
           puts "Now we have #{students.count} student"
         else
           puts "Now we have #{students.count} students"
         end
       # get another name from the user
+      puts "Name: "
       name = gets.chomp
+      puts "Cohort: "
+      cohort = gets.chomp.to_sym
+      if cohort.empty?
+        cohort = :november
+      end
     end
   # return the array of students
   students
@@ -29,11 +42,8 @@ def print_header
 end
 
 def print(students)
-   puts "Below are students whose names are shorter than 12 characters:".center(@line_width)
     students.each.with_index(1) do |student, index|
-     if student[:name].length < 12
        puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)".center(@line_width)
-     end
     end
   end
 
