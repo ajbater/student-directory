@@ -58,9 +58,10 @@ def input_students
       name = gets.chomp
       if !name.empty?
         puts "Cohort: "
-        cohort = gets.chomp.to_sym
-        if cohort.empty?
-          cohort = :november
+        cohort = gets.chomp.downcase
+        while !cohorts.include?(cohort)
+          puts "Please enter a valid cohort: "
+          cohort = gets.chomp.downcase
         end
         puts "Country of birth: "
         country_of_birth = gets.chomp
@@ -87,8 +88,7 @@ def print_header
 end
 
 def print_students_list
-  sorted_by_cohort = @students.sort_by { |hash| hash[:cohort] }
-  sorted_by_cohort.each do |student|
+  @students.each do |student|
     puts "#{student[:name]} (#{student[:cohort]} cohort)".center(@line_width)
     puts "Country of birth: #{student[:country_of_birth]}".center(@line_width)
     puts "Height: #{student[:height]}".center(@line_width)
