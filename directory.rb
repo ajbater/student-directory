@@ -1,18 +1,19 @@
 @line_width = 80
 
 def input_students
-  puts "Please enter the names of the student followed by their cohort"
-  puts "Keep adding students and cohorts until you have entered them all"
+  puts "Please enter the name, cohort and additional information for each student"
   puts "To finish, just hit return twice"
   # create an empty array
   students = []
   # get the first names
   puts "Name: "
   name = gets.chomp
-  puts "Cohort: "
-  cohort = gets.chomp.to_sym
-  if cohort.empty?
-    cohort = :november
+  if !name.empty?
+    puts "Cohort: "
+    cohort = gets.chomp.to_sym
+    if cohort.empty?
+      cohort = :november
+    end
   end
   # while name is not empty, repeat this code
     while !name.empty? do
@@ -26,10 +27,12 @@ def input_students
       # get another name from the user
       puts "Name: "
       name = gets.chomp
-      puts "Cohort: "
-      cohort = gets.chomp.to_sym
-      if cohort.empty?
-        cohort = :november
+      if !name.empty?
+        puts "Cohort: "
+        cohort = gets.chomp.to_sym
+        if cohort.empty?
+          cohort = :november
+        end
       end
     end
   # return the array of students
