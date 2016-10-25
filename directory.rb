@@ -7,25 +7,25 @@ def input_students
   students = []
   # get the first names
   puts "Name: "
-  name = gets.chomp
+  name = gets.gsub(/\n/, "")
   if !name.empty?
     puts "Cohort: "
-    cohort = gets.chomp.to_sym
+    cohort = gets.gsub(/\n/, "").to_sym
     if cohort.empty?
       cohort = :november
     end
     puts "Country of birth: "
-    country_of_birth = gets.chomp
+    country_of_birth = gets.gsub(/\n/, "")
     if country_of_birth.empty?
       country_of_birth = "not supplied"
     end
     puts "Height: "
-    height = gets.chomp
+    height = gets.gsub(/\n/, "")
     if height.empty?
       height = "not supplied"
     end
     puts "Hobbies: "
-    hobbies = gets.chomp
+    hobbies = gets.gsub(/\n/, "")
     if hobbies.empty?
       hobbies = "not supplied"
     end
@@ -41,25 +41,25 @@ def input_students
         end
       # get another name from the user
       puts "Name: "
-      name = gets.chomp
+      name = gets.gsub(/\n/, "")
       if !name.empty?
         puts "Cohort: "
-        cohort = gets.chomp.to_sym
+        cohort = gets.gsub(/\n/, "").to_sym
         if cohort.empty?
           cohort = :november
         end
         puts "Country of birth: "
-        country_of_birth = gets.chomp
+        country_of_birth = gets.gsub(/\n/, "")
         if country_of_birth.empty?
           country_of_birth = "not supplied"
         end
         puts "Height: "
-        height = gets.chomp
+        height = gets.gsub(/\n/, "")
         if height.empty?
           height = "not supplied"
         end
         puts "Hobbies: "
-        hobbies = gets.chomp
+        hobbies = gets.gsub(/\n/, "")
         if hobbies.empty?
           hobbies = "not supplied"
         end
@@ -85,7 +85,7 @@ def print(students)
 
 def print_footer(students)
   if students.count == 1
-    puts "Overall, we have #{students.count} great student."
+    puts "Overall, we have #{students.count} great student.".center(@line_width)
   else
     puts "Overall, we have #{students.count} great students".center(@line_width)
   end
