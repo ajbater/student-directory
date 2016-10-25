@@ -14,11 +14,26 @@ def input_students
     if cohort.empty?
       cohort = :november
     end
+    puts "Country of birth: "
+    country_of_birth = gets.chomp
+    if country_of_birth.empty?
+      country_of_birth = "not supplied"
+    end
+    puts "Height: "
+    height = gets.chomp
+    if height.empty?
+      height = "not supplied"
+    end
+    puts "Hobbies: "
+    hobbies = gets.chomp
+    if hobbies.empty?
+      hobbies = "not supplied"
+    end
   end
   # while name is not empty, repeat this code
     while !name.empty? do
       # add the student hash to the array
-      students << {name: name, cohort: cohort}
+      students << {name: name, cohort: cohort, country_of_birth: country_of_birth, height: height, hobbies: hobbies}
         if students.count == 1
           puts "Now we have #{students.count} student"
         else
@@ -32,6 +47,21 @@ def input_students
         cohort = gets.chomp.to_sym
         if cohort.empty?
           cohort = :november
+        end
+        puts "Country of birth: "
+        country_of_birth = gets.chomp
+        if country_of_birth.empty?
+          country_of_birth = "not supplied"
+        end
+        puts "Height: "
+        height = gets.chomp
+        if height.empty?
+          height = "not supplied"
+        end
+        puts "Hobbies: "
+        hobbies = gets.chomp
+        if hobbies.empty?
+          hobbies = "not supplied"
         end
       end
     end
@@ -47,6 +77,9 @@ end
 def print(students)
     students.each.with_index(1) do |student, index|
        puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)".center(@line_width)
+       puts "Country of birth: #{student[:country_of_birth]}".center(@line_width)
+       puts "Height: #{student[:height]}".center(@line_width)
+       puts "Hobbies include: #{student[:hobbies]}".center(@line_width)
     end
   end
 
