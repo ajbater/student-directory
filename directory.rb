@@ -7,25 +7,25 @@ def input_students
   students = []
   # get the first names
   puts "Name: "
-  name = gets.gsub(/\n/, "")
+  name = gets.chomp
   if !name.empty?
     puts "Cohort: "
-    cohort = gets.gsub(/\n/, "").to_sym
+    cohort = gets.chomp.to_sym
     if cohort.empty?
       cohort = :november
     end
     puts "Country of birth: "
-    country_of_birth = gets.gsub(/\n/, "")
+    country_of_birth = gets.chomp
     if country_of_birth.empty?
       country_of_birth = "not supplied"
     end
     puts "Height: "
-    height = gets.gsub(/\n/, "")
+    height = gets.chomp
     if height.empty?
       height = "not supplied"
     end
     puts "Hobbies: "
-    hobbies = gets.gsub(/\n/, "")
+    hobbies = gets.chomp
     if hobbies.empty?
       hobbies = "not supplied"
     end
@@ -41,25 +41,25 @@ def input_students
         end
       # get another name from the user
       puts "Name: "
-      name = gets.gsub(/\n/, "")
+      name = gets.chomp
       if !name.empty?
         puts "Cohort: "
-        cohort = gets.gsub(/\n/, "").to_sym
+        cohort = gets.chomp.to_sym
         if cohort.empty?
           cohort = :november
         end
         puts "Country of birth: "
-        country_of_birth = gets.gsub(/\n/, "")
+        country_of_birth = gets.chomp
         if country_of_birth.empty?
           country_of_birth = "not supplied"
         end
         puts "Height: "
-        height = gets.gsub(/\n/, "")
+        height = gets.chomp
         if height.empty?
           height = "not supplied"
         end
         puts "Hobbies: "
-        hobbies = gets.gsub(/\n/, "")
+        hobbies = gets.chomp
         if hobbies.empty?
           hobbies = "not supplied"
         end
@@ -75,13 +75,16 @@ def print_header
 end
 
 def print(students)
-    students.each.with_index(1) do |student, index|
-       puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)".center(@line_width)
-       puts "Country of birth: #{student[:country_of_birth]}".center(@line_width)
-       puts "Height: #{student[:height]}".center(@line_width)
-       puts "Hobbies include: #{student[:hobbies]}".center(@line_width)
-    end
+  counter = 0
+  until counter == students.length
+    student = students[counter]
+    puts "#{student[:name]} (#{student[:cohort]} cohort)".center(@line_width)
+    puts "Country of birth: #{student[:country_of_birth]}".center(@line_width)
+    puts "Height: #{student[:height]}".center(@line_width)
+    puts "Hobbies include: #{student[:hobbies]}".center(@line_width)
+    counter += 1
   end
+end
 
 def print_footer(students)
   if students.count == 1
