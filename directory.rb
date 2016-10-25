@@ -1,30 +1,34 @@
 @students = []
 @line_width = 80
+@cohorts = [
+  "january",
+  "february",
+  "march",
+  "april",
+  "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december"
+]
+
+#def add_student_info
+#  @students << {name: name, cohort: cohort.to_sym, country_of_birth: country_of_birth, height: height, hobbies: hobbies}
+#end
 
 def input_students
   puts "Please enter the name, cohort and additional information for each student"
   puts "To finish, just hit return twice"
-  cohorts = [
-    "january",
-    "february",
-    "march",
-    "april",
-    "may",
-    "june",
-    "july",
-    "august",
-    "september",
-    "october",
-    "november",
-    "december"
-  ]
   # get the first names
   puts "Name: "
   name = STDIN.gets.chomp
   if !name.empty?
     puts "Cohort: "
     cohort = STDIN.gets.chomp.downcase
-    while !cohorts.include?(cohort)
+    while !@cohorts.include?(cohort)
       puts "Please enter a valid cohort: "
       cohort = STDIN.gets.chomp.downcase
     end
@@ -47,6 +51,7 @@ def input_students
   # while name is not empty, repeat this code
     while !name.empty? do
       # add the student hash to the array
+      #add_student_info
       @students << {name: name, cohort: cohort.to_sym, country_of_birth: country_of_birth, height: height, hobbies: hobbies}
         if @students.count == 1
           puts "Now we have #{@students.count} student"
@@ -59,7 +64,7 @@ def input_students
       if !name.empty?
         puts "Cohort: "
         cohort = STDIN.gets.chomp.downcase
-        while !cohorts.include?(cohort)
+        while !@cohorts.include?(cohort)
           puts "Please enter a valid cohort: "
           cohort = STDIN.gets.chomp.downcase
         end
@@ -158,6 +163,7 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, country_of_birth, height, hobbies = line.chomp.split(',')
+    #add_student_info
     @students << {name: name, cohort: cohort.to_sym, country_of_birth: country_of_birth, height: height, hobbies: hobbies}
   end
   file.close
