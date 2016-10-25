@@ -25,11 +25,9 @@ def input_students
   if !name.empty?
     puts "Cohort: "
     cohort = gets.chomp.downcase
-    if !cohorts.include?(cohort)
+    while !cohorts.include?(cohort)
       puts "Please enter a valid cohort: "
       cohort = gets.chomp.downcase
-    elsif cohort.empty? || !cohorts.include?(cohort)
-      cohort = "unknown"
     end
     puts "Country of birth: "
     country_of_birth = gets.chomp
