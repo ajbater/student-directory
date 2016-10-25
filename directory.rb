@@ -58,6 +58,8 @@ end
 students = input_students
 
 # Nothing will happen until we call the methods
-print_header
-print(students)
-print_footer(students)
+if students.count > 0
+  print_header
+  print(students)
+  print_footer(students)
+end
