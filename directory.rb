@@ -20,26 +20,26 @@ def input_students
   ]
   # get the first names
   puts "Name: "
-  name = gets.chomp
+  name = STDIN.gets.chomp
   if !name.empty?
     puts "Cohort: "
-    cohort = gets.chomp.downcase
+    cohort = STDIN.gets.chomp.downcase
     while !cohorts.include?(cohort)
       puts "Please enter a valid cohort: "
-      cohort = gets.chomp.downcase
+      cohort = STDIN.gets.chomp.downcase
     end
     puts "Country of birth: "
-    country_of_birth = gets.chomp
+    country_of_birth = STDIN.gets.chomp
     if country_of_birth.empty?
       country_of_birth = "not supplied"
     end
     puts "Height: "
-    height = gets.chomp
+    height = STDIN.gets.chomp
     if height.empty?
       height = "not supplied"
     end
     puts "Hobbies: "
-    hobbies = gets.chomp
+    hobbies = STDIN.gets.chomp
     if hobbies.empty?
       hobbies = "not supplied"
     end
@@ -55,26 +55,26 @@ def input_students
         end
       # get another name from the user
       puts "Name: "
-      name = gets.chomp
+      name = STDIN.gets.chomp
       if !name.empty?
         puts "Cohort: "
-        cohort = gets.chomp.downcase
+        cohort = STDIN.gets.chomp.downcase
         while !cohorts.include?(cohort)
           puts "Please enter a valid cohort: "
-          cohort = gets.chomp.downcase
+          cohort = STDIN.gets.chomp.downcase
         end
         puts "Country of birth: "
-        country_of_birth = gets.chomp
+        country_of_birth = STDIN.gets.chomp
         if country_of_birth.empty?
           country_of_birth = "not supplied"
         end
         puts "Height: "
-        height = gets.chomp
+        height = STDIN.gets.chomp
         if height.empty?
           height = "not supplied"
         end
         puts "Hobbies: "
-        hobbies = gets.chomp
+        hobbies = STDIN.gets.chomp
         if hobbies.empty?
           hobbies = "not supplied"
         end
@@ -138,7 +138,7 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -154,13 +154,27 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, country_of_birth, height, hobbies = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym, country_of_birth: country_of_birth, height: height, hobbies: hobbies}
   end
   file.close
 end
+
+def try_load_students
+  filename = ARGV.first # first argument from command line
+  return if filename.nil? # get out of the method if it isn't given
+  if File.exists?(filename) # if it exists
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else # if it doesn't exists
+    puts "Sorry, #{filename} doesn't exist."
+    exit # quit the program
+  end
+end
+
+try_load_students
 
 interactive_menu
