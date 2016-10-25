@@ -119,11 +119,36 @@ def print_footer(students)
   end
 end
 
-students = input_students
+def interactive_menu
+  students = []
+  loop do
+    # print the menu and ask the user what to do
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit"
+    # read the input
+    selection = gets.chomp
+    # do what the user has asked
+    case selection
+      when "1"
+        students = input_students
+      when "2"
+        print_header
+        print(students)
+        print_footer(students)
+      when "9"
+        exit # this will cause the program to terminate
+      else
+        puts "I don't know what you meant, try again"
+    end
+  end
+end
+
+interactive_menu
 
 # Nothing will happen until we call the methods
-if students.count > 0
-  print_header
-  print(students)
-  print_footer(students)
-end
+#if students.count > 0
+#  print_header
+#  print(students)
+#  print_footer(students)
+#end
