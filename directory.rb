@@ -56,7 +56,7 @@ def input_students
   if !@name.empty?
     ask_more_info
   end
-  # while name is not empty, repeat this code
+    # while name is not empty, repeat this code
     while !@name.empty? do
       # add the student hash to the array
       add_student_info
@@ -162,14 +162,18 @@ end
 
 def try_load_students
   filename = ARGV.first # first argument from command line
-  return if filename.nil? # get out of the method if it isn't given
-  if File.exists?(filename) # if it exists
+  if filename.nil? # get out of the method if it isn't given
+    filename = "students.csv"
+  elsif !File.exists?(filename) # if it doesn't exist
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
-  else # if it doesn't exists
-    puts "Sorry, #{filename} doesn't exist."
-    exit # quit the program
-  end
+  #else # if it doesn't exists
+  #  puts "Sorry, #{filename} doesn't exist."
+  #  exit # quit the program
+  #end
 end
 
 try_load_students
