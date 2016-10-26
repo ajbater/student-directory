@@ -1,5 +1,4 @@
 @students = []
-@line_width = 80
 @cohorts = [
   "january",
   "february",
@@ -76,24 +75,24 @@ def input_students
 end
 
 def print_header
-  puts "The students of Villain Academy".center(@line_width)
-  puts "---------------".center(@line_width)
+  puts "The students of Villain Academy"
+  puts "---------------"
 end
 
 def print_students_list
   @students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)".center(@line_width)
-    puts "Country of birth: #{student[:country_of_birth]}".center(@line_width)
-    puts "Height: #{student[:height]}".center(@line_width)
-    puts "Hobbies include: #{student[:hobbies]}".center(@line_width)
+    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    puts "Country of birth: #{student[:country_of_birth]}"
+    puts "Height: #{student[:height]}"
+    puts "Hobbies include: #{student[:hobbies]}"
   end
 end
 
 def print_footer
   if @students.count == 1
-    puts "Overall, we have #{@students.count} great student.".center(@line_width)
+    puts "Overall, we have #{@students.count} great student."
   else
-    puts "Overall, we have #{@students.count} great students".center(@line_width)
+    puts "Overall, we have #{@students.count} great students"
   end
 end
 
@@ -114,14 +113,19 @@ end
 def process(selection)
   case selection
     when "1"
+      puts "You selected: 1. Input the students"
       input_students
     when "2"
+      puts "You selected: 2. Show the students"
       show_students
     when "3"
+      puts "You selected: 3. Save the student list to students.csv"
       save_students
     when "4"
+      puts "You selected: 4. Load the student list from students.csv"
       load_students
     when "9"
+      puts "See you next time"
       exit
     else
       puts "I don't know what you mean, try again"
