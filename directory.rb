@@ -139,18 +139,6 @@ def interactive_menu
   end
 end
 
-#def save_students
-#  # open the file for writing
-#  file = File.open("students.csv", "w")
-  # iterate over the array of students
-#  @students.each do |student|
-#    student_data = [student[:name], student[:cohort], student[:country_of_birth], student[:height], student[:hobbies]]
-#    csv_line = student_data.join(",")
-#    file.puts csv_line
-#  end
-#  file.close
-#end
-
 def not_exist
   puts "Sorry, that file does not exist."
 end
@@ -158,7 +146,7 @@ end
 def save_students
   puts "Which file would you like to save to? "
   save_to = STDIN.gets.chomp
-  while !File.exists?(save_to)
+  while !File.exist?(save_to)
     not_exist
     puts "Try again: "
     save_to = STDIN.gets.chomp
@@ -172,24 +160,16 @@ def save_students
   file.close
 end
 
-#def load_students(filename = "students.csv")
-#  file = File.open(filename, "r")
-#  file.readlines.each do |line|
-#    @name, @cohort, @country_of_birth, @height, @hobbies = line.chomp.split(',')
-#    add_student_info
-#  end
-#  file.close
-#end
-
 def user_selects_load_students
   puts "File to load students from: "
   filename = STDIN.gets.chomp
-  while !File.exists?(filename)
+  while !File.exist?(filename)
     not_exist
     puts "Try again: "
     filename = STDIN.gets.chomp
   end
   load_students(filename)
+  puts "Loaded #{@students.count} from #{filename}"
 end
 
 def load_students(filename)
@@ -205,7 +185,7 @@ def try_load_students
   filename = ARGV.first # first argument from command line
   if filename.nil? # get out of the method if it isn't given
     filename = "students.csv"
-  elsif !File.exists?(filename) # if it doesn't exist
+  elsif !File.exist?(filename) # if it doesn't exist
     not_exist
     exit
   end
