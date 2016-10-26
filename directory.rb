@@ -144,20 +144,22 @@ def not_exist
 end
 
 def save_students
-  puts "Which file would you like to save to? "
-  save_to = STDIN.gets.chomp
-  while !File.exist?(save_to)
-    not_exist
-    puts "Try again: "
+    puts "Which file would you like to save to? "
     save_to = STDIN.gets.chomp
-  end
-  file = File.open(save_to, "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort], student[:country_of_birth], student[:height], student[:hobbies]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
-  end
-  file.close
+    while !File.exist?(save_to)
+      not_exist
+      puts "Try again: "
+      save_to = STDIN.gets.chomp
+    end
+    File.open(save_to, "w") { |file|
+      (
+      @students.each do |student|
+          student_data = [student[:name], student[:cohort], student[:country_of_birth], student[:height], student[:hobbies]]
+          csv_line = student_data.join(",")
+          file.puts csv_line
+        end
+      )
+    }
 end
 
 def user_selects_load_students
@@ -173,12 +175,12 @@ def user_selects_load_students
 end
 
 def load_students(filename)
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    @name, @cohort, @country_of_birth, @height, @hobbies = line.chomp.split(',')
-    add_student_info
-  end
-    file.close
+  File.open(filename, "r") {
+    |file| file.readlines.each {
+      |line| @name, @cohort, @country_of_birth, @height, @hobbies = line.chomp.split(',')
+      add_student_info
+    }
+  }
 end
 
 def try_load_students
