@@ -14,45 +14,53 @@
   "november",
   "december"
 ]
+@name =
+@cohort =
+@country_of_birth =
+@height =
+@hobbies =
 
-#def add_student_info
-#  @students << {name: name, cohort: cohort.to_sym, country_of_birth: country_of_birth, height: height, hobbies: hobbies}
-#end
+def ask_more_info
+  puts "Cohort: "
+  @cohort = STDIN.gets.chomp.downcase
+  while !@cohorts.include?(@cohort)
+    puts "Please enter a valid cohort: "
+    @cohort = STDIN.gets.chomp.downcase
+  end
+  puts "Country of birth: "
+  @country_of_birth = STDIN.gets.chomp
+  if @country_of_birth.empty?
+    @country_of_birth = "not supplied"
+  end
+  puts "Height: "
+  @height = STDIN.gets.chomp
+  if @height.empty?
+    @height = "not supplied"
+  end
+  puts "Hobbies: "
+  @hobbies = STDIN.gets.chomp
+  if @hobbies.empty?
+    @hobbies = "not supplied"
+  end
+end
+
+def add_student_info
+  @students << {name: @name, cohort: @cohort.to_sym, country_of_birth: @country_of_birth, height: @height, hobbies: @hobbies}
+end
 
 def input_students
   puts "Please enter the name, cohort and additional information for each student"
   puts "To finish, just hit return twice"
   # get the first names
   puts "Name: "
-  name = STDIN.gets.chomp
-  if !name.empty?
-    puts "Cohort: "
-    cohort = STDIN.gets.chomp.downcase
-    while !@cohorts.include?(cohort)
-      puts "Please enter a valid cohort: "
-      cohort = STDIN.gets.chomp.downcase
-    end
-    puts "Country of birth: "
-    country_of_birth = STDIN.gets.chomp
-    if country_of_birth.empty?
-      country_of_birth = "not supplied"
-    end
-    puts "Height: "
-    height = STDIN.gets.chomp
-    if height.empty?
-      height = "not supplied"
-    end
-    puts "Hobbies: "
-    hobbies = STDIN.gets.chomp
-    if hobbies.empty?
-      hobbies = "not supplied"
-    end
+  @name = STDIN.gets.chomp
+  if !@name.empty?
+    ask_more_info
   end
   # while name is not empty, repeat this code
-    while !name.empty? do
+    while !@name.empty? do
       # add the student hash to the array
-      #add_student_info
-      @students << {name: name, cohort: cohort.to_sym, country_of_birth: country_of_birth, height: height, hobbies: hobbies}
+      add_student_info
         if @students.count == 1
           puts "Now we have #{@students.count} student"
         else
@@ -60,29 +68,9 @@ def input_students
         end
       # get another name from the user
       puts "Name: "
-      name = STDIN.gets.chomp
-      if !name.empty?
-        puts "Cohort: "
-        cohort = STDIN.gets.chomp.downcase
-        while !@cohorts.include?(cohort)
-          puts "Please enter a valid cohort: "
-          cohort = STDIN.gets.chomp.downcase
-        end
-        puts "Country of birth: "
-        country_of_birth = STDIN.gets.chomp
-        if country_of_birth.empty?
-          country_of_birth = "not supplied"
-        end
-        puts "Height: "
-        height = STDIN.gets.chomp
-        if height.empty?
-          height = "not supplied"
-        end
-        puts "Hobbies: "
-        hobbies = STDIN.gets.chomp
-        if hobbies.empty?
-          hobbies = "not supplied"
-        end
+      @name = STDIN.gets.chomp
+      if !@name.empty?
+        ask_more_info
       end
     end
 end
@@ -162,9 +150,8 @@ end
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
-    name, cohort, country_of_birth, height, hobbies = line.chomp.split(',')
-    #add_student_info
-    @students << {name: name, cohort: cohort.to_sym, country_of_birth: country_of_birth, height: height, hobbies: hobbies}
+    @name, @cohort, @country_of_birth, @height, @hobbies = line.chomp.split(',')
+    add_student_info
   end
   file.close
 end
