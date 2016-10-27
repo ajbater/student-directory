@@ -17,11 +17,37 @@ require 'csv'
 ]
 @name =
 @cohort =
+@country_of_birth =
+@height =
+@hobbies =
 
+def add_student_info
+  @students << {name: @name, cohort: @cohort.to_sym, country_of_birth: @country_of_birth, height: @height, hobbies: @hobbies}
+end
 
-#def add_student_info
-#  @students << {name: @name, cohort: @cohort.to_sym}
-#end
+def ask_more_info
+  puts "Cohort: "
+  @cohort = STDIN.gets.chomp.downcase
+  while !@cohorts.include?(@cohort)
+    puts "Please enter a valid cohort: "
+    @cohort = STDIN.gets.chomp.downcase
+  end
+  puts "Country of birth: "
+  @country_of_birth = STDIN.gets.chomp
+  if @country_of_birth.empty?
+    @country_of_birth = "not supplied"
+  end
+  puts "Height: "
+  @height = STDIN.gets.chomp
+  if @height.empty?
+    @height = "not supplied"
+  end
+  puts "Hobbies: "
+  @hobbies = STDIN.gets.chomp
+  if @hobbies.empty?
+    @hobbies = "not supplied"
+  end
+end
 
 def input_students
   puts "Please enter the name and cohort for each student"
@@ -30,17 +56,13 @@ def input_students
   puts "Name: "
   @name = STDIN.gets.chomp
   if !@name.empty?
-    puts "Cohort: "
-    @cohort = STDIN.gets.chomp.downcase
-    while !@cohorts.include?(@cohort)
-      puts "Please enter a valid cohort: "
-      @cohort = STDIN.gets.chomp.downcase
-    end
+    ask_more_info
   end
     # while name is not empty, repeat this code
     while !@name.empty? do
       # add the student hash to the array
-      @students << {name: @name, cohort: @cohort}
+      add_student_info
+      #@students << {name: @name, cohort: @cohort}
         if @students.count == 1
           puts "Now we have #{@students.count} student"
         else
@@ -50,12 +72,7 @@ def input_students
       puts "Name: "
       @name = STDIN.gets.chomp
       if !@name.empty?
-        puts "Cohort: "
-        @cohort = STDIN.gets.chomp.downcase
-        while !@cohorts.include?(@cohort)
-          puts "Please enter a valid cohort: "
-          @cohort = STDIN.gets.chomp.downcase
-        end
+      ask_more_info
       end
     end
 end
@@ -68,6 +85,9 @@ end
 def print_students_list
   @students.each do |student|
     puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    puts "Country of birth: #{student[:country_of_birth]}"
+    puts "Height: #{student[:height]}"
+    puts "Hobbies include: #{student[:hobbies]}"
   end
 end
 
@@ -102,11 +122,11 @@ def process(selection)
       puts "You selected: 2. Show the students"
       show_students
     when "3"
-      puts "You selected: 3. Save the student list to students.csv"
+      puts "You selected: 3. Save the student list to a file"
       save_students
     when "4"
-      puts "You selected: 4. Load the student list from students.csv"
-      load_students
+      puts "You selected: 4. Load the student list from a file"
+      user_selects_load_students
     when "9"
       puts "See you next time"
       exit
@@ -122,9 +142,9 @@ def interactive_menu
   end
 end
 
-#def not_exist
-#  puts "Sorry, that file does not exist."
-#end
+def not_exist
+  puts "Sorry, that file does not exist."
+end
 
 #def save_students
 #    puts "Which file would you like to save to? "
@@ -146,27 +166,34 @@ end
 #end
 
 def save_students
-  CSV.open("students.csv", "w") do |csv|
+  puts "Which file would you like to save to? "
+      save_to = STDIN.gets.chomp
+      while !File.exist?(save_to)
+        not_exist
+        puts "Try again: "
+        save_to = STDIN.gets.chomp
+      end
+  CSV.open(save_to, "w") do |csv|
     @students.each do |student|
       #student_data = [student[:name], student[:cohort]]
       #csv_line = student_data.join(",")
       #csv << csv_line
-      csv << [student[:name], student[:cohort]]
+      csv << [student[:name], student[:cohort], student[:country_of_birth], student[:height], student[:hobbies]]
     end
   end
 end
 
-#def user_selects_load_students
-#  puts "File to load students from: "
-#  filename = STDIN.gets.chomp
-#  while !File.exist?(filename)
-#    not_exist
-#    puts "Try again: "
-#    filename = STDIN.gets.chomp
-#  end
-#  load_students(filename)
-#  puts "Loaded #{@students.count} from #{filename}"
-#end
+def user_selects_load_students
+  puts "File to load students from: "
+  filename = STDIN.gets.chomp
+  while !File.exist?(filename)
+    not_exist
+    puts "Try again: "
+    filename = STDIN.gets.chomp
+  end
+  load_students(filename)
+  puts "Loaded #{@students.count} from #{filename}"
+end
 
 #def load_students
 #   file = File.open("students.csv", "r")
@@ -177,10 +204,11 @@ end
 #   file.close
 #end
 
- def load_students
-   CSV.foreach("students.csv") do |row|
-     @name, @cohort = row[0], row[1]
-     @students << {name: @name, cohort: @cohort.to_sym}
+ def load_students(filename)
+   CSV.foreach(filename) do |row|
+     @name, @cohort, @country_of_birth, @height, @hobbies = row[0], row[1], row[2], row[3], row[4]
+     #@students << {name: @name, cohort: @cohort.to_sym}
+     add_student_info
    end
  end
 
@@ -192,7 +220,7 @@ def try_load_students
     not_exist
     exit
   end
-    load_students
+    load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
 end
 
